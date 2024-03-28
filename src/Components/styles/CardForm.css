@@ -1,0 +1,18 @@
+.card-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-form div {
+    margin-bottom: 10px; /* Adjust spacing between each input field */
+  }
+  
+  .card-form label {
+    margin-bottom: 5px; /* Adjust spacing between label and input */
+  }
+  
+.card-form input {
+    /* Add any additional styling for input fields */
+    padding: 5px;
+    border: 1px solid #ccc;
+}
