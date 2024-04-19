@@ -9,7 +9,7 @@ function UpdateCardForm({ onSubmit, selectedCard }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({selectedCard});
+    onSubmit(selectedCard.id,name,attackPoints,healthPoints);
     
     setName("");
     setAttackPoints("");
