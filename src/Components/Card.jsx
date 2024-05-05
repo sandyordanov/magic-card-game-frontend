@@ -7,8 +7,8 @@ function Card(props){
         <div className="card">
  
         <h5 className="title"> {props.name}</h5>
-        <p className="point">Attack points: {props.attackPoints}</p>
-        <p className="point">Health points: {props.healthPoints}</p>
+        <p className="point">Attack points: {props.ap}</p>
+        <p className="point">Health points: {props.hp}</p>
         
         </div>
        

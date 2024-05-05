@@ -16,11 +16,11 @@ const CardService = {
     }
     ),
 
-    updateCard: (id, name, attackPoints, healthPoints) => axios.put(`${API_URL}/${afterSlash}/${id}`,
+    updateCard: (input) => axios.put(`${API_URL}/${afterSlash}/${input.id}`,
     {
-        "name" : name,
-        "attackPoints" : attackPoints,
-        "healthPoints" : healthPoints
+        "name" : input.name,
+        "ap" : input.attackPoints,
+        "hp" : input.healthPoints
     }
     ),
 
