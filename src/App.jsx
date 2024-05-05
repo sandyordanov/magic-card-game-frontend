@@ -5,6 +5,7 @@ import Decks from './Pages/Decks';
 import Shop from './Pages/Shop';
 import CardsPage from './Pages/CardsPage';
 import Home from './Pages/Home';
+import UpdatePage from './Pages/admin/UpdatePage';
 
 
 
@@ -17,6 +18,8 @@ const router = createBrowserRouter([
   { path: '/home', element: <Home /> },
   { path: '/cardsAdmin', element: <CardsPage /> },
   { path: '/account', element: <Account /> },
+  { path: '/updateCard', element: <UpdatePage /> },
+
 ]);
 
 function App() {

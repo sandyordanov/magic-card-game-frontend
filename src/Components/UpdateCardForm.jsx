@@ -1,19 +1,32 @@
 import React, { useState } from "react";
 
 import "../Components/styles/CardForm.css";
+import CardService from "../Services/CardService";
+import { useNavigate } from "react-router-dom";
 
-function UpdateCardForm({ onSubmit, selectedCard }) {
+function UpdateCardForm(input) {
+  const selectedCard = input.selectedCard;
+  const navigate = useNavigate();
     const [name, setName] = useState(selectedCard.name || "");
-    const [attackPoints, setAttackPoints] = useState(selectedCard.attackPoints || "");
-    const [healthPoints, setHealthPoints] = useState(selectedCard.healthPoints || "");
-
+    const [attackPoints, setAttackPoints] = useState(selectedCard.ap || "");
+    const [healthPoints, setHealthPoints] = useState(selectedCard.hp || "");
+    
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(selectedCard.id,name,attackPoints,healthPoints);
     
-    setName("");
-    setAttackPoints("");
-    setHealthPoints("");
+    let newCard = {
+      id : selectedCard.id,
+      name : name,
+      attackPoints : attackPoints,
+      healthPoints: healthPoints
+    }
+
+    CardService.updateCard(newCard)
+    .then((response) => {
+        console.log(response.data);
+        navigate('/cardsAdmin');
+      }
+    )
   };
 
   return (
