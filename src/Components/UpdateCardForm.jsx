@@ -8,8 +8,8 @@ function UpdateCardForm(input) {
   const selectedCard = input.selectedCard;
   const navigate = useNavigate();
     const [name, setName] = useState(selectedCard.name || "");
-    const [attackPoints, setAttackPoints] = useState(selectedCard.ap || "");
-    const [healthPoints, setHealthPoints] = useState(selectedCard.hp || "");
+    const [attackPoints, setAttackPoints] = useState(selectedCard.attackPoints || "");
+    const [healthPoints, setHealthPoints] = useState(selectedCard.healthPoints || "");
     
   const handleSubmit = (e) => {
     e.preventDefault();
