@@ -1,20 +1,29 @@
 import React from "react";
-import './styles/Nav.css'
 import { Link } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.css"
 
 function NavAdmin() {
     return (
-        <>
-            <div class="banner">
-                MCG admin
+        <div class="container bg-secondary">
+            <div class="row">
+                <div class="col">
+                   <p class="navbar">MCG admin</p>
+                </div>
             </div>
-            <nav className="navbar">
-                <Link to="/cardsAdmin" className="nav-link">Cards</Link>
-                <Link to="/" className="nav-link">Else</Link>
-            </nav>
             
-
-        </>
+          
+             <div class="row mt-2">
+                <div class="col ">
+                    <div class="row mb-3 align-middle">
+                        <Link to="/cardsAdmin" className="nav-link">Cards</Link>
+                    </div>
+                    <div class="row mb-3 align-middle">
+                        <Link to="/" className="nav-link">Else</Link>
+                    </div> 
+                </div>
+            </div> 
+        </div>
+            
     )
 
 }

@@ -33,24 +33,37 @@ function CardsPage() {
       });
   };
   return (
-    <>
-      <NavAdmin />
-      <h2>Create cards</h2>
-      <CardForm onSubmit={handleCreate}></CardForm>
-
-      <h2>All cards</h2>
-      <div className="cards-container">
-        {cards.map((element, index) => (
-          <div key={index} className="card-container">
-            <Card {...element}></Card>
-            <div className="button-container">
-              <button onClick={()=>{navigate('/updateCard', { state: element })}}>Update</button>
-              <button onClick={() => handleDelete(element.id)}>Delete</button>
-            </div>
-          </div>
-        ))}
+    <div class="container">
+    <div class="row">
+    <div class="col-2">
+      <NavAdmin class="" />
       </div>
-    </>
+
+      <div class="col">
+         
+         <h2>Create cards</h2>
+         <CardForm onSubmit={handleCreate}></CardForm>
+ 
+         <h2>All cards</h2>
+         <div className="cards-container">
+           {cards.map((element, index) => (
+             <div key={index} className="card-container">
+               <Card {...element}></Card>
+               <div className="button-container">
+                 <button onClick={()=>{navigate('/updateCard', { state: element })}}>Update</button>
+                 <button onClick={() => handleDelete(element.id)}>Delete</button>
+               </div>
+             </div>
+           ))}
+ 
+         </div>
+     </div>
+    </div>
+      
+
+
+    </div>
+     
   );
 }
 
