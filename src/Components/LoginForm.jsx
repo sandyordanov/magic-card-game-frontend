@@ -36,7 +36,7 @@ function LoginForm(props) {
                         </div>
 
                         <div className="mb-3">
-                            <button type="submit" className="btn btn-primary">Register</button>
+                            <button type="submit" className="btn btn-primary">Login</button>
                         </div>
                     </form>
                 </div>
