@@ -1,6 +1,7 @@
 import React, { useState, useHistory } from 'react';
 import UserService from '../../Services/UserService';
 import 'bootstrap/dist/css/bootstrap.css'
+import {useNavigate} from "react-router-dom";
 
 function RegisterForm() {
 
@@ -8,7 +9,7 @@ function RegisterForm() {
     username: '',
     password: '',
   });
-
+    const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -16,31 +17,44 @@ function RegisterForm() {
       [name]: value
     });
   };
+    function redirect(){
 
+    }
   const handleSubmit = (e) => {
     e.preventDefault();
      UserService.createUser(formData)
+         .catch(() => alert("Register failed!"))
+        .then(response => {
+          navigate("/login");
+        })
+        .catch(error => console.error(error.errors));
 
    };
 
   return (
-    <div class="container ">
-      <div class="row border border-solid p-3">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div class="col mb-2">
-          <label class="me-2">Username:</label>
-          <input type="text" name="username" value={formData.username} onChange={handleChange} />
+      <div className="container">
+        <div className="row justify-content-center align-items-center">
+          <div className="col-sm-12 col-md-12 col-lg-4">
+            <h2 className="mb-3 mt-2">Register</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="me-2 form-label">Username:</label>
+                <input class="form-control" type="text" name="username" value={formData.username} onChange={handleChange}/>
+              </div>
+              <div className="mb-3">
+                <label className="me-2 form-label">Password:</label>
+                <input class="form-control" type="password" name="password" value={formData.password} onChange={handleChange}/>
+              </div>
+
+              <div className="mb-3">
+                <button type="submit" className="btn btn-primary">Register</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div>
-          <label class="me-2">Password:</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} />
-        </div>
-        <button class="mt-2" type="submit">Register</button>
-      </form>
-    </div>
       </div>
-  );
+)
+  ;
 }
 
 export default RegisterForm;

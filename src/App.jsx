@@ -1,9 +1,9 @@
-import './App.css'
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Account from './Pages/Account';
 import Decks from './Pages/Decks';
 import Shop from './Pages/Shop';
-import CardsPage from './Pages/CardsPage';
+import CardsPage from './Pages/admin/CardsPage.jsx';
 import Home from './Pages/Home';
 import UpdatePage from './Pages/admin/UpdatePage';
 import RegisterForm from './Pages/account/Register';

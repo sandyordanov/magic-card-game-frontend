@@ -31,39 +31,42 @@ function UpdateCardForm(input) {
 
   return (
     
-    <form className="card-form" onSubmit={handleSubmit}>
-      <div>
+    <form className="card-form border border-black rounded-1 border-3 p-3 mt-2" onSubmit={handleSubmit}>
+      <div className="mb-3">
         <h2>Update card</h2>
         <label htmlFor="name">Name: </label>
         <input
           type="text"
           id="name"
+          className="form-control"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
       </div>
-      <div>
+      <div className="mb-3">
         <label htmlFor="attackPoints">Attack Points: </label>
         <input
           type="number"
           id="attackPoints"
+          className="form-control"
           value={attackPoints}
           onChange={(e) => setAttackPoints(e.target.value)}
           required
         />
       </div>
-      <div>
+      <div className="mb-3">
         <label htmlFor="healthPoints">Health Points: </label>
         <input
           type="number"
           id="healthPoints"
+          className="form-control"
           value={healthPoints}
           onChange={(e) => setHealthPoints(e.target.value)}
           required
         />
       </div>
-      <button type="submit">Update Card</button>
+      <button className="btn btn-primary" type="submit">Update Card</button>
     </form>
   );
 }

@@ -6,7 +6,14 @@ const UpdatePage = () => {
     const  selectedCard = location.state || {};
     return(
         <>
-        <UpdateCardForm selectedCard={selectedCard}/>
+                <div className="container">
+
+                    <div className="row justify-content-center">
+                        <div className="col-6">
+                            <UpdateCardForm selectedCard={selectedCard}/>
+                        </div>
+                    </div>
+                </div>
         </>
     )
 }
