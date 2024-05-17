@@ -18,3 +18,16 @@
    font-size: 14px;
    margin: 0;
  }
+ .ap{
+     background-color: darkorange;
+     font-size: 21px;
+     font-weight: bold;
+ }
+.hp{
+    background-color: royalblue;
+    font-size: 21px;
+    font-weight: bold;
+}
+h5{
+    font-size: 1vw;
+}
