@@ -8,7 +8,8 @@ import Home from './Pages/Home';
 import UpdatePage from './Pages/admin/UpdatePage';
 import RegisterForm from './Pages/account/Register';
 import Login from './Pages/account/Login';
-
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
 const router = createBrowserRouter([
@@ -26,10 +27,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  )
+      <DndProvider backend={HTML5Backend}>
+        <RouterProvider router={router} />
+      </DndProvider>
+  );
 }
 
 export default App

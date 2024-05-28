@@ -31,6 +31,13 @@
     font-weight: bold;
     transition: color 0.3s;
   }
-
+.decks-page{
+    height: 100vh;
+    background-image: url(/src/assets/decksBg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+}
 
   
