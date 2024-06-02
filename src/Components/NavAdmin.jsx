@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 function NavAdmin() {
     return (
-        <div className="container-fluid h-100">
+        <div className="container-fluid ">
             <div className="row">
                 <div className="col">
                     <nav className="navbar navbar-dark bg-dark flex-column text-center">

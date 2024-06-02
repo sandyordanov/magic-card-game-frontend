@@ -1,8 +1,12 @@
 import React from 'react';
 import './styles/Home.css'
 import Nav from '../Components/Nav';
+import ReceiveInvitation from "../Components/ReceiveInvitation.jsx";
+import SendInvitation from "../Components/SendInvitation.jsx";
+import Invite from "./Invite.jsx";
 
 const Home = () => {
+    const username = 'Player1'; // Replace with dynamic username logic
   return (
       <div>
 
@@ -21,6 +25,11 @@ const Home = () => {
                       <div className="col-7 text-center">
                           <h1 className="">Patch notes</h1>
                           <p className="bg-dark bg-opacity-75 text-white border border-1 rounded-1">Patch notes</p>
+                      </div>
+                  </div>
+                  <div className="row">
+                      <div className="col-2 text-white inviteBar">
+                            <Invite>asd</Invite>
                       </div>
                   </div>
               </div>

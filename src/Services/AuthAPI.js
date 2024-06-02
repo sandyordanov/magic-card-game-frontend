@@ -1,5 +1,5 @@
 import axios from "axios";
-import TokenManager from "./TokenManager";
+import TokenManager from "./TokenManager.js";
 
 const AuthAPI = {
     login: (username, password) => axios.post('http://localhost:8080/tokens', { username, password })

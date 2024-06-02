@@ -10,6 +10,8 @@ import RegisterForm from './Pages/account/Register';
 import Login from './Pages/account/Login';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Invite from "./Pages/Invite.jsx";
+import Lobby from "./Pages/Lobby.jsx";
 
 
 const router = createBrowserRouter([
@@ -22,6 +24,8 @@ const router = createBrowserRouter([
   { path: '/account', element: <Account /> },
   { path: '/updateCard', element: <UpdatePage /> },
   { path: '/login', element: <Login /> },
+  { path: '/invite', element: <Invite /> },
+  { path: '/lobby', element: <Lobby /> },
 
 ]);
 
