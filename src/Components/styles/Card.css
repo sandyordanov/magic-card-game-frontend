@@ -1,33 +1,23 @@
-.card {
-   border: 1px solid #ccc;
-   border-radius: 5px;
-   padding: 10px;
-   margin: 10px;
-   background-color: #f9f9f9;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   max-width: 300px;
- }
 
  .title {
-   font-size: 18px;
+   font-size:  1.2em;
    font-weight: bold;
-   margin-bottom: 5px;
+   margin-bottom: 0px;
  }
 
- .point {
-   font-size: 14px;
-   margin: 0;
- }
  .ap{
      background-color: darkorange;
-     font-size: 21px;
+     font-size: 1.2em;
      font-weight: bold;
  }
 .hp{
     background-color: royalblue;
-    font-size: 21px;
+    font-size: 1.2em;
     font-weight: bold;
 }
-h5{
-    font-size: 1vw;
-}
+ .title {
+     margin-top: 0rem; /* Adjust this value as needed */
+ }
+ .stats {
+     margin-bottom: 0rem; /* Adjust this value as needed */
+ }

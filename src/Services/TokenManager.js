@@ -22,6 +22,10 @@ const TokenManager = {
     clear: () => {
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("claims");
+    },
+    logout: () => {
+        TokenManager.clear();
+        window.location.href = '/login';  // Redirect to the login page after logout
     }
 }
 

@@ -1,125 +1,137 @@
-import React, {useEffect, useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.css'
-import {Client} from '@stomp/stompjs';
+import React, { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Client } from '@stomp/stompjs';
 import TokenManager from "../Services/TokenManager.js";
+import { useNavigate } from 'react-router-dom';
 import PlayerService from "../Services/PlayerService.js";
-import {useNavigate} from 'react-router-dom';
 
 const Invite = () => {
     const [invitations, setInvitations] = useState([]);
+    const [onlineUsers, setOnlineUsers] = useState([]);
     const [client, setClient] = useState(null);
-    const userId = TokenManager.getUserId();
-    const [players, setPlayers] = useState([]);
-    const [player, setPlayer] = useState([]);
+    const [player ,setPlayer] = useState([])
+    const [userId ,setUserId] = useState()
     const navigate = useNavigate();
     useEffect(() => {
-        if (userId){
-            PlayerService.getAllPlayers().then((response) => {
-                console.log(response.data)
-                setPlayers(response.data)
-            })
-        }
+        const userId = TokenManager.getUserId();
+        setUserId(userId)
+        PlayerService.getPlayer(userId).then((response) =>{
+            setPlayer(response.data)
+        });
     }, []);
-    useEffect(() => {
-        if (userId){
-            PlayerService.getPlayer(userId).then((response) => {
-                setPlayer(response.data)
-            })
-        }
-    }, [userId]);
+
     useEffect(() => {
         if (userId) {
             const stompClient = new Client({
-                brokerURL: 'ws://localhost:8080/ws', // Replace with your WebSocket URL
+                brokerURL: 'ws://localhost:8080/ws',
                 reconnectDelay: 5000,
                 onConnect: () => {
                     console.log('Connected');
-                    // Subscribe to the channel with the user's name
-                    stompClient.subscribe(`/topic/invitations/${userId}`, (message) => {
+                    stompClient.subscribe(`/topic/invitations/${player.name}`, (message) => {
                         if (message.body) {
                             setInvitations((prevInvitations) => [...prevInvitations, JSON.parse(message.body)]);
+                            console.log(invitations)
                         }
+                    });
+
+                    stompClient.subscribe('/topic/online', (message) => {
+                        if (message.body) {
+                            const onlineUsers = JSON.parse(message.body);
+                            const filteredUsers = onlineUsers.filter(user => user !== player.name);
+                            setOnlineUsers(filteredUsers);
+                        }
+                    });
+
+                    stompClient.publish({
+                        destination: '/app/status',
+                        body: JSON.stringify({ username: player.name, online: true }),
                     });
                 },
                 onDisconnect: () => {
                     console.log('Disconnected');
+                    stompClient.publish({
+                        destination: '/app/status',
+                        body: JSON.stringify({ username: player.name, online: false }),
+                    });
                 },
             });
-            console.log("UserId" + userId);
+
             stompClient.activate();
             setClient(stompClient);
 
-            // Cleanup on component unmount
             return () => {
                 stompClient.deactivate();
             };
         }
+    }, [userId,player.name,invitations]);
 
-    }, [userId]);
     const sendInvitation = (receiver) => {
+        console.log(player)
         if (client && client.connected) {
             const invitation = {
-                sender: userId,
+                sender: player.name,
                 receiver: receiver,
-                senderName: player.name,
-                status: 'Pending'
+                status: 'Pending',
             };
             client.publish({
-                destination: `/app/invite/${receiver}`,
+                destination: `/app/invite/${userId}`,
                 body: JSON.stringify(invitation),
             });
         }
     };
-    const acceptInvite = (receiver) => {
+
+    const acceptInvite = (sender) => {
         if (client && client.connected) {
             const invitation = {
-                sender: userId,
-                receiver: receiver,
-                senderName: player.name,
-                status: 'Accepted'
+                sender: player.name,
+                receiver: sender,
+                status: 'Accepted',
             };
             client.publish({
-                destination: `/app/invite/${receiver}`,
+                destination: `/app/invite/${userId}`,
                 body: JSON.stringify(invitation),
             });
-            updateInvitationStatus(receiver, 'Accepted');
+            updateInvitationStatus(sender, 'Accepted');
             navigate('/lobby');
         }
     };
-    const declineInvite = (receiver) => {
+
+    const declineInvite = (sender) => {
         if (client && client.connected) {
             const invitation = {
-                sender: userId,
-                receiver: receiver,
-                senderName: player.name,
-                status: 'Declined'
+                sender: player.name,
+                receiver: sender,
+                status: 'Declined',
             };
             client.publish({
-                destination: `/app/invite/${receiver}`,
+                destination: `/app/invite/${sender}`,
                 body: JSON.stringify(invitation),
             });
-            updateInvitationStatus(receiver, 'Declined');
+            updateInvitationStatus(sender, 'Declined');
         }
     };
+
     const updateInvitationStatus = (sender, newStatus) => {
         setInvitations((prevInvitations) =>
             prevInvitations
                 .map((invitation) =>
-                    invitation.sender === sender ? {...invitation, status: newStatus} : invitation
+                    invitation.sender === sender ? { ...invitation, status: newStatus } : invitation
                 )
                 .filter((invitation) => invitation.status !== 'Declined')
         );
     };
+
     const deleteInvitation = (sender) => {
         setInvitations((prevInvitations) => prevInvitations.filter((invitation) => invitation.sender !== sender));
     };
+
     return (
-        <div className="">
-            <h2 className="text-white">Invite to play {userId}</h2>
+        <div className="bg-dark">
+            <h3 className="text-white text-center">Invite to play {userId}</h3>
             <ul>
                 {invitations.map((invitation, index) => (
                     <li key={index}>
-                        <strong>From:</strong> {invitation.senderName} <br/>
+                        <strong>From:</strong> {invitation.sender} <br />
                         <strong>Status:</strong> {invitation.status}
                         {invitation.status === 'Pending' && (
                             <>
@@ -145,18 +157,18 @@ const Invite = () => {
                 ))}
             </ul>
             <table className="table table-dark">
-            <thead>
+                <thead>
                 <tr>
                     <th scope="col">Username</th>
                     <th scope="col">Invite</th>
                 </tr>
                 </thead>
                 <tbody>
-                {players.map((player, index) => (
+                {onlineUsers.map((user, index) => (
                     <tr key={index}>
-                        <td>{player.name}</td>
+                        <td>{user}</td>
                         <td>
-                            <button onClick={() => sendInvitation(player.userId)}>
+                            <button className="" onClick={() => sendInvitation(user)}>
                                 Send Invitation
                             </button>
                         </td>

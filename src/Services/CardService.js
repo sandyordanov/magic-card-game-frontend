@@ -4,17 +4,19 @@ import TokenManager from "./TokenManager.js";
 
 const API_URL = "http://localhost:8080"; 
 const afterSlash = "cards";
-const accessToken = TokenManager.getAccessToken();
 const CardService = {
     getCard: (id) => axios.get(`${API_URL}/${afterSlash}/${id}`,
     {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` },
     }),
 
     getAllCards: () => axios.get(`${API_URL}/${afterSlash}`,{
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` },
     }),
-
+    searchCards: (queryParams) => axios.get(`${API_URL}/${afterSlash}/search`, {
+            params: queryParams,
+            headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` },
+        }),
     createCard: (name, attackPoints, healthPoints) => axios.post(`${API_URL}/${afterSlash}`,
     {
         "name": name,
@@ -22,7 +24,7 @@ const CardService = {
         "healthPoints": healthPoints
     },
     {
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` }
     }
     
     ),
@@ -34,14 +36,14 @@ const CardService = {
         "healthPoints" : input.healthPoints
     },
     {
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` }
     }
     
     ),
 
     deleteCard: (id) => axios.delete(`${API_URL}/${afterSlash}/${id}`,
     {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${TokenManager.getAccessToken()}` },
     }),
 }
 

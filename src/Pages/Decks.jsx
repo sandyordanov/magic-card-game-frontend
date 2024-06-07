@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import './styles/Home.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Nav from "../Components/Nav.jsx";
 import DeckService from "../Services/DeckService.js";
 import TokenManager from "../Services/TokenManager.js";
 import DraggableCard from "../Components/DragableCard.jsx";
-import { DroppableDeck, DroppableOwnedCards } from "../Components/Droppables.jsx";
+import {DroppableDeck, DroppableOwnedCards} from "../Components/Droppables.jsx";
 import PlayerService from "../Services/PlayerService.js";
 
 const Decks = () => {
@@ -47,11 +47,9 @@ const Decks = () => {
             if (response.status === 200) {
                 setDeck(prevDeck => [...prevDeck, cardToMove]);
                 setOwnedCards(prevOwnedCards => prevOwnedCards.filter(card => card.id !== cardId));
-            } else {
-                console.error('Failed to add card to deck', response);
             }
         } catch (error) {
-            console.error('Error adding card to deck', error);
+            alert(error.response.data.error);
         }
     };
 
@@ -76,41 +74,50 @@ const Decks = () => {
 
     return (
         <div className="decks-page">
-            <Nav />
-            <div>
-                <h2>Average hp: {avgStats.averageHealthPoints}</h2>
-                <h2>Average ap: {avgStats.averageAttackPoints}</h2>
+            <Nav/>
+            <div className="container mt-2 bg-dark text-white rounded-top-3">
+                <div className="row mt-3">
+                    <div className="col">
+                        <p>Average attack
+                            points: {Number(avgStats.averageAttackPoints).toFixed(2)}</p>
+                    </div>
+                    <div className="col">
+                        <p>Average health points: {Number(avgStats.averageHealthPoints).toFixed(2)}</p>
+                    </div>
+                    <div className="col text-end">
+                        <p> {deck.length} / {Number(avgStats.deckSize)}</p>
+                    </div>
+                </div>
             </div>
-            <div className="container">
-                <DroppableDeck cards={deck} onDrop={moveCardToDeck}>
-                    {(cards) => (
-                        <div className={`droppable-container ${cards.length === 0 ? 'empty' : ''}`}>
-                            <h2>Deck</h2>
-                            <div className="card-list">
-                                {cards.map((element, index) => (
-                                    <div key={index} className="col-md-3 mb-3">
-                                        <DraggableCard card={element} type="DECK_CARD" />
-                                    </div>
-                                ))}
-                            </div>
+            <DroppableDeck cards={deck} onDrop={moveCardToDeck}>
+                {(cards) => (
+                    <div>
+                        <h4 className="text-white text-center">Deck</h4>
+                        <div className="droppable-container">
+                            {cards.map((element, index) => (
+                                <div key={index} className="">
+                                    <DraggableCard card={element} type="DECK_CARD"/>
+                                </div>
+                            ))}
                         </div>
-                    )}
-                </DroppableDeck>
-                <DroppableOwnedCards cards={ownedCards} onDrop={moveCardToOwned}>
-                    {(cards) => (
-                        <div className={`droppable-container container ${cards.length === 0 ? 'empty' : ''}`}>
-                            <h2>Owned cards</h2>
-                            <div className="card-list">
-                                {cards.map((element, index) => (
-                                    <div key={index} className="col-md-3 mb-3">
-                                        <DraggableCard card={element} type="OWNED_CARD" />
-                                    </div>
-                                ))}
-                            </div>
+                    </div>
+                )}
+            </DroppableDeck>
+            <DroppableOwnedCards cards={ownedCards} onDrop={moveCardToOwned}>
+                {(cards) => (
+                    <div>
+                        <h4 className="text-white text-center">Owned cards</h4>
+                        <div className="droppable-container">
+                            {cards.map((element, index) => (
+                                <div key={index} className="">
+                                    <DraggableCard card={element} type="OWNED_CARD"/>
+                                </div>
+                            ))}
                         </div>
-                    )}
-                </DroppableOwnedCards>
-            </div>
+                    </div>
+                )}
+            </DroppableOwnedCards>
+
         </div>
     );
 };

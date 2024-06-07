@@ -23,6 +23,8 @@ const DraggableCard = ({ card, type }) => {
             clone.style.position = 'absolute';
             clone.style.top = '-9999px';
             clone.style.left = '-9999px';
+            clone.style.opacity = '1'; // Ensure opacity is set to 1 (fully opaque)
+            clone.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; // Optional: Add shadow for better visibility
             document.body.appendChild(clone);
 
             preview(clone, {
@@ -43,7 +45,7 @@ const DraggableCard = ({ card, type }) => {
             ref={drag}
             style={{
                 cursor: isDragging ? '-webkit-grabbing' : '-webkit-grab',
-                boxShadow: isDragging ? '0 0 10px rgba(0, 0, 0, 0.5)' : 'none',
+
                 transform: isDragging ? 'scale(1.05)' : 'none',
                 transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 borderRadius: '17px', // Ensure the card has rounded borders

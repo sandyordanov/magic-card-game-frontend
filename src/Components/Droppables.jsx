@@ -8,23 +8,23 @@ const DroppableDeck = ({ cards, onDrop, children }) => {
     });
 
     return (
-        <div ref={drop} className="row">
+        <div ref={drop} className="container">
             {children(cards)}
         </div>
     );
 };
 
-const DroppableOwnedCards = ({ cards, onDrop, children }) => {
+const DroppableOwnedCards = ({cards, onDrop, children }) => {
     const [, drop] = useDrop({
         accept: 'DECK_CARD',
         drop: (item) => onDrop(item.id),
     });
 
     return (
-        <div ref={drop} className="row">
+        <div ref={drop} className="container">
             {children(cards)}
         </div>
     );
 };
 
-export { DroppableDeck, DroppableOwnedCards };
+export {DroppableDeck, DroppableOwnedCards };
