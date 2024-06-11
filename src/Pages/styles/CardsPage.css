@@ -16,3 +16,10 @@
     padding: 5px 10px;
     font-size: 14px;
   }
+.nav-admin-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Adjust z-index to ensure it stays on top */
+    height: 100vh; /* Full height to fit the screen */
+    overflow-y: auto; /* To allow scrolling within the nav if content overflows */
+}

@@ -1,63 +1,64 @@
 import React, { useState } from "react";
-
+import { useForm } from 'react-hook-form';
 import "../Components/styles/CardForm.css";
 
 function CardForm({ onSubmit }) {
-  const [name, setName] = useState("");
-  const [attackPoints, setAttackPoints] = useState("");
-  const [healthPoints, setHealthPoints] = useState("");
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ name, attackPoints, healthPoints });
-    
-    setName("");
-    setAttackPoints("");
-    setHealthPoints("");
-  };
+    const handleFormSubmit = (data) => {
+        onSubmit(data);
+    };
 
-  return (
-      <form className="card-form border border-black rounded-1 border-3 p-3 mt-2" onSubmit={handleSubmit}>
-          <div className="mb-3">
-              <h2>Create cards</h2>
-              <label htmlFor="name" className="form-label">Name:</label>
-              <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-              />
-          </div>
-          <div className="mb-3">
-              <label htmlFor="attackPoints" className="form-label">Attack Points:</label>
-              <input
-                  type="number"
-                  className="form-control"
-                  id="attackPoints"
-                  value={attackPoints}
-                  onChange={(e) => setAttackPoints(e.target.value)}
-                  required
-              />
-          </div>
-          <div className="mb-3">
-              <label htmlFor="healthPoints" className="form-label">Health Points:</label>
-              <input
-                  type="number"
-                  className="form-control"
-                  id="healthPoints"
-                  value={healthPoints}
-                  onChange={(e) => setHealthPoints(e.target.value)}
-                  required
-              />
-          </div>
-          <div className="text-center">
-              <button className="btn btn-primary" type="submit">Create Card</button>
-          </div>
-      </form>
-
-  );
+    return (
+        <form className="card-form border border-black rounded-1 border-3 p-3 mt-2" onSubmit={handleSubmit(handleFormSubmit)}>
+            <div className="mb-3">
+                <h2>Create cards</h2>
+                <label htmlFor="name" className="form-label">Name:</label>
+                <input
+                    type="text"
+                    {...register('name', {
+                        required: 'Name is required',
+                        minLength: { value: 3, message: 'Name must be at least 3 characters' },
+                        maxLength: { value: 20, message: 'Name cannot exceed 20 characters' }
+                    })}
+                    className="form-control"
+                    id="name"
+                />
+                {errors.name && <p className="error-message">{errors.name.message}</p>}
+            </div>
+            <div className="mb-3">
+                <label htmlFor="attackPoints" className="form-label">Attack Points:</label>
+                <input
+                    type="number"
+                    {...register('attackPoints', {
+                        required: 'Attack Points are required',
+                        min: { value: 0, message: 'Attack Points must be at least 0' },
+                        max: { value: 20, message: 'Attack Points cannot exceed 20' }
+                    })}
+                    className="form-control"
+                    id="attackPoints"
+                />
+                {errors.attackPoints && <p className="error-message">{errors.attackPoints.message}</p>}
+            </div>
+            <div className="mb-3">
+                <label htmlFor="healthPoints" className="form-label">Health Points:</label>
+                <input
+                    type="number"
+                    {...register('healthPoints', {
+                        required: 'Health Points are required',
+                        min: { value: 0, message: 'Health Points must be at least 0' },
+                        max: { value: 20, message: 'Health Points cannot exceed 20' }
+                    })}
+                    className="form-control"
+                    id="healthPoints"
+                />
+                {errors.healthPoints && <p className="error-message">{errors.healthPoints.message}</p>}
+            </div>
+            <div className="text-center">
+                <button className="btn btn-primary" type="submit">Create Card</button>
+            </div>
+        </form>
+    );
 }
 
 export default CardForm;
