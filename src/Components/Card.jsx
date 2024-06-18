@@ -3,7 +3,7 @@ import "../Components/styles/Card.css";
 
 function Card(props) {
     return (
-        <div className="card rounded-4 border border-3 border-black ps-2 pe-2" style={{maxWidth:"11rem"}}>
+        <div className="card rounded-4 border border-3 border-black ps-2 pe-2" data-cy="card" style={{maxWidth:"11rem"}}>
             <img src="/eyecard.png" className="card-img-top mb-1" alt="..." style={{ maxHeight: "9rem" }} />
             <div className="text-center p-2">
                 <div className="row stats">

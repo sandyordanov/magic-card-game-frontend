@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "../Components/styles/CardForm.css";
 import CardService from "../Services/CardService";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import {useNavigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
 
-function UpdateCardForm({ selectedCard }) {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+function UpdateCardForm({selectedCard}) {
+    const {register, handleSubmit, formState: {errors}} = useForm();
 
     const navigate = useNavigate();
     const [name, setName] = useState(selectedCard.name || "");
@@ -28,7 +28,8 @@ function UpdateCardForm({ selectedCard }) {
     };
 
     return (
-        <form className="card-form border border-black rounded-1 border-3 p-3 mt-2" onSubmit={handleSubmit(handleFormSubmit)}>
+        <form className="card-form border border-black rounded-1 border-3 p-3 mt-2"
+              onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="mb-3">
                 <h2>Update card</h2>
                 <label htmlFor="name">Name: </label>
@@ -36,11 +37,12 @@ function UpdateCardForm({ selectedCard }) {
                     type="text"
                     {...register('name', {
                         required: 'Name is required',
-                        minLength: { value: 3, message: 'Name must be at least 3 characters' },
-                        maxLength: { value: 20, message: 'Name cannot exceed 20 characters' }
+                        minLength: {value: 3, message: 'Name must be at least 3 characters'},
+                        maxLength: {value: 20, message: 'Name cannot exceed 20 characters'}
                     })}
                     id="name"
                     className="form-control"
+                    data-cy="input-name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -53,11 +55,12 @@ function UpdateCardForm({ selectedCard }) {
                     type="number"
                     {...register('attackPoints', {
                         required: 'Attack Points are required',
-                        min: { value: 0, message: 'Attack Points must be at least 0' },
-                        max: { value: 20, message: 'Attack Points cannot exceed 20' }
+                        min: {value: 0, message: 'Attack Points must be at least 0'},
+                        max: {value: 20, message: 'Attack Points cannot exceed 20'}
                     })}
                     id="attackPoints"
                     className="form-control"
+                    data-cy="input-ap"
                     value={attackPoints}
                     onChange={(e) => setAttackPoints(e.target.value)}
                     required
@@ -70,18 +73,19 @@ function UpdateCardForm({ selectedCard }) {
                     type="number"
                     {...register('healthPoints', {
                         required: 'Health Points are required',
-                        min: { value: 0, message: 'Health Points must be at least 0' },
-                        max: { value: 20, message: 'Health Points cannot exceed 20' }
+                        min: {value: 0, message: 'Health Points must be at least 0'},
+                        max: {value: 20, message: 'Health Points cannot exceed 20'}
                     })}
                     id="healthPoints"
                     className="form-control"
+                    data-cy="input-hp"
                     value={healthPoints}
                     onChange={(e) => setHealthPoints(e.target.value)}
                     required
                 />
                 {errors.healthPoints && <p className="error-message">{errors.healthPoints.message}</p>}
             </div>
-            <button className="btn btn-primary" type="submit">Update Card</button>
+            <button className="btn btn-primary" data-cy="btn-submit" type="submit">Update Card</button>
         </form>
     );
 }

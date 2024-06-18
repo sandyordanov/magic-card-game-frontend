@@ -12,10 +12,12 @@ function Nav() {
     const [player ,setPlayer] = useState({})
 
     useEffect(() => {
-        PlayerService.getPlayer(userId).then((response) =>{
-            setPlayer(response.data)
-        });
-    }, [userId]);
+        if (token != undefined){
+            PlayerService.getPlayer(userId).then((response) =>{
+                setPlayer(response.data)
+            });
+        }
+    }, [token, userId]);
     const handleLogout = () => {
         const client = new Client({
             brokerURL: 'ws://localhost:8080/ws',

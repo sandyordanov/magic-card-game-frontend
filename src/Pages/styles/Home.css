@@ -36,6 +36,29 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+.logged-in {
+    color: green;
+}
+.game-container{
+    background: rgb(2,0,36);
+    background: linear-gradient(342deg, rgba(2,0,36,1) 0%, rgba(9,121,107,1) 98%);
+}
+.card-container {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.card-container:hover {
+    transform: scale(1.05); /* Example: Enlarge card on hover */
+}
+
+.card.selected {
+    border: 2px solid #007bff; /* Example: Highlight selected card */
+}
+.invite{
+    background: rgb(2,0,36);
+    background: linear-gradient(342deg, rgba(2,0,36,1) 0%, rgba(9,121,107,1) 98%);
+}
 .droppable-container {
     border: 2px dashed #aaa;
     border-bottom-left-radius: 10px;

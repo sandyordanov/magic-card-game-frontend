@@ -17,10 +17,10 @@ function NavAdmin() {
                         <a className="navbar-brand" href="#">MCG Admin</a>
                         <ul className="navbar-nav flex-column">
                             <li className="nav-item">
-                                <Link to="/cardsAdmin" className="nav-link text-white">All Cards</Link>
+                                <Link to="/cardsAdmin" className="nav-link text-white">Cards</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/" className="nav-link text-white">MCG</Link>
+                                <Link to="/admins" className="nav-link text-white">Admins</Link>
                             </li>
                             <li className="nav-item">
                                 <a onClick={handleLogout} className="nav-link text-white"

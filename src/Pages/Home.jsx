@@ -2,8 +2,10 @@ import React from 'react';
 import './styles/Home.css'
 import Nav from '../Components/Nav';
 import Invite from "./Invite.jsx";
+import TokenManager from "../Services/TokenManager.js";
 
 const Home = () => {
+    const token = TokenManager.getAccessToken();
   return (
       <div>
 
@@ -33,7 +35,7 @@ const Home = () => {
                   </div>
                       <div className="col-2  invites-container">
                           <div className=" text-white">
-                              <Invite>asd</Invite>
+                              {token != undefined && <Invite>asd</Invite>}
                           </div>
                       </div>
               </div>
