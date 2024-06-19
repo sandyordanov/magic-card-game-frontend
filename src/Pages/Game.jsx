@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import useWebSocket from '../Services/useWebSocket';
 import {useParams, useNavigate} from 'react-router-dom';
-import playerService from '../Services/PlayerService.js';
 import TokenManager from '../Services/TokenManager.js';
 import Card from '../Components/Card.jsx';
+import './styles/Game.css'
 
 const Game = () => {
     const {gameId} = useParams();
@@ -13,22 +13,32 @@ const Game = () => {
     const [player, setPlayer] = useState(null);
     const [opponent, setOpponent] = useState(null);
     const [selectedCard, setSelectedCard] = useState(null);
-    const [isPlayerTurn, setIsPlayerTurn] = useState(false); // Track player's turn
+    const [isPlayerTurn, setIsPlayerTurn] = useState(false);
+    const [showFacedownCard, setShowFacedownCard] = useState(false);
+    const [playedCard, setPlayedCard] = useState(null);
+    const [opponentPlayedCard, setOpponentPlayedCard] = useState(null);
+
     useEffect(() => {
         if (isConnected && client && gameState && player) {
-            const playerChannel = `/topic/game/${gameId}/player/${player.id}`;
+            const playerChannel = `/topic/game/${gameId}/player/${player.userId}`;
             const subscription = client.subscribe(playerChannel, (message) => {
-                alert(message); // Replace with your UI logic
-                setIsPlayerTurn(true); // Enable player to play a card
+                setIsPlayerTurn(true);
+                setShowFacedownCard(true);
             });
+            return () => {
+                if (subscription) {
+                    subscription.unsubscribe();
+                }
+            };
         }
     }, [isConnected, client, gameState, player, gameId]);
+
     useEffect(() => {
         if (isConnected && client) {
             const subscription = client.subscribe(`/topic/game/${gameId}`, (message) => {
                 const game = JSON.parse(message.body);
                 setGameState(game);
-                // Check if it's the current player's turn based on their ID
+
                 const userId = TokenManager.getUserId();
                 setIsPlayerTurn(game.player1.userId === userId || game.player2.userId === userId);
             });
@@ -38,6 +48,11 @@ const Game = () => {
                 body: JSON.stringify({gameId: Number(gameId)}),
             });
 
+            return () => {
+                if (subscription) {
+                    subscription.unsubscribe();
+                }
+            };
         }
     }, [isConnected, client, gameId]);
 
@@ -54,68 +69,115 @@ const Game = () => {
         }
     }, [gameState]);
 
+    useEffect(() => {
+        if (gameState && gameState.turnFinished) {
+            const opponentPlayed = gameState.player1.userId === player.userId ? gameState.pendingRequests[gameState.player2.userId] : gameState.pendingRequests[gameState.player1.userId];
+            setOpponentPlayedCard(opponentPlayed.card);
+
+            const timeoutId = setTimeout(() => {
+                setShowFacedownCard(false);
+                setPlayedCard(null);
+                setOpponentPlayedCard(null);
+
+                if (gameState.gameOver) {
+                    setView('gameOver');
+                }
+            }, 3000); // Wait 3 seconds before hiding
+
+            return () => clearTimeout(timeoutId); // Clean up the timeout if the component unmounts
+        }
+    }, [gameState, player]);
+
+    const [view, setView] = useState('game');
+
     const playCard = () => {
         if (client && isConnected && selectedCard && isPlayerTurn) {
             const request = {
                 gameId: gameId,
-                playerId: player.id,
+                userId: player.userId,
                 card: selectedCard,
             };
             client.publish({
                 destination: '/app/play-card',
                 body: JSON.stringify(request),
             });
+            setPlayedCard(selectedCard);
+            player.hand = player.hand.filter(x => x.id !== selectedCard.id);
             setSelectedCard(null);
-            setIsPlayerTurn(false); // Disable playing until it's the player's turn again
+            setIsPlayerTurn(false);
         }
     };
+
     const handleCardClick = (card) => {
         if (isPlayerTurn) {
-            setSelectedCard(selectedCard === card ? null : card); // Toggle selection
+            setSelectedCard(selectedCard === card ? null : card);
         }
     };
 
     const handleCancelSelection = () => {
         setSelectedCard(null);
     };
-
     if (!gameState || !player) return <div>Loading...</div>;
-
-    if (gameState.isGameOver) {
+    if (view === 'gameOver') {
+        if (gameState.winner === null) {
+            return (
+                <div className="game-over">
+                    <h1>Game Over</h1>
+                    <h2>Draw</h2>
+                    <button onClick={() => navigate('/')}>Back to Lobby</button>
+                </div>
+            );
+        }
         return (
-            <div className="game-over">
-                <h1>Game Over</h1>
-                <h2>Winner: {gameState.winner.name}</h2>
-                <button onClick={() => navigate('/invite')}>Back to Lobby</button>
+            <div className="game-over text-center mt-2">
+                <h1 className="text-white">Game Over</h1>
+
+                <h3>
+                    {gameState.winner.name === player.name ? 'You Won!' : 'You Lost!'}
+                </h3>
+                <button onClick={() => navigate('/')}>Back to Lobby</button>
             </div>
         );
+
     }
 
     return (
-        <div className="game-container d-flex flex-column justify-content-between vh-100">
-            <div className="player-data p-3" style={{position: 'absolute', top: 0, left: 0}}>
+        <div className="game-container">
+            <div className="player-data left">
                 <h2>{player.name}</h2>
                 <p>Health: {player.hp}</p>
             </div>
-            <div className="player-data p-3" style={{position: 'absolute', top: 0, right: 100}}>
+            <div className="player-data right">
                 <h2>{opponent.name}</h2>
                 <p>Health: {opponent.hp}</p>
             </div>
 
-            <div className="player-hand mt-auto p-3" style={{position: 'relative'}}>
+            <div className="position-relative d-flex justify-content-center align-items-center"
+                 style={{height: '100vh'}}>
+                {showFacedownCard && !opponentPlayedCard && (
+                    <div className="facedown-card">
+
+                    </div>
+                )}
+                {opponentPlayedCard && (
+                    <div className="opponent-played-card">
+                        <Card {...opponentPlayedCard} />
+                    </div>
+                )}
+                {playedCard && (
+                    <div className="played-card">
+                        <Card {...playedCard} />
+                    </div>
+                )}
+            </div>
+
+            <div className="player-hand">
                 <div className="hand d-flex justify-content-center">
                     {player.hand &&
                         player.hand.map((card, index) => (
                             <div
                                 key={index}
-                                className={`card-container mx-1 ${selectedCard === card ? 'selected-card' : ''}`}
-                                style={{
-                                    transform: 'scale(1.05)',
-                                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-                                    borderRadius: '1px',
-                                    background: "azure"
-                                }}
+                                className={`card-container ${selectedCard === card ? 'selected-card' : ''}`}
                                 onClick={() => handleCardClick(card)}
                             >
                                 <Card {...card} />
@@ -127,7 +189,7 @@ const Game = () => {
                         <button onClick={playCard} className="btn btn-primary play-button mr-2">
                             Play Card
                         </button>
-                        <button onClick={handleCancelSelection} className="btn btn-secondary">
+                        <button onClick={handleCancelSelection} className="btn btn-secondary cancel-button ms-2">
                             Cancel
                         </button>
                     </div>

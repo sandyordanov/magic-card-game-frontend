@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Client} from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 import TokenManager from "../Services/TokenManager.js";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PlayerService from "../Services/PlayerService.js";
 
 const Invite = () => {
@@ -49,14 +49,14 @@ const Invite = () => {
 
                     stompClient.publish({
                         destination: '/app/status',
-                        body: JSON.stringify({username: player.name, online: true}),
+                        body: JSON.stringify({ username: player.name, online: true }),
                     });
                 },
                 onDisconnect: () => {
                     console.log('Disconnected');
                     stompClient.publish({
                         destination: '/app/status',
-                        body: JSON.stringify({username: player.name, online: false}),
+                        body: JSON.stringify({ username: player.name, online: false }),
                     });
                 },
             });
@@ -118,7 +118,7 @@ const Invite = () => {
         setInvitations((prevInvitations) =>
             prevInvitations
                 .map((invitation) =>
-                    invitation.sender === sender ? {...invitation, status: newStatus} : invitation
+                    invitation.sender === sender ? { ...invitation, status: newStatus } : invitation
                 )
                 .filter((invitation) => invitation.status !== 'Declined')
         );
@@ -131,33 +131,41 @@ const Invite = () => {
     return (
         <div className="bg-dark">
             <h3 className="text-white text-center">Invite to play</h3>
-            <ul className="text-center list-group">
+            <ul className="text-center text-white list-group">
                 {invitations.map((invitation, index) => (
                     <li className="mb-1 invite rounded-2" key={index}>
-                        <strong>{invitation.sender}</strong> <br/>
+                        <strong>{invitation.sender}</strong> <br />
                         <strong>Status:</strong> {invitation.status}
 
                         {invitation.status === 'Pending' && (
                             <>
-                                <button className="btn btn-dark ms-3 mb-1 rounded-5 border-2 border-primary-subtle"
-                                        onClick={() => acceptInvite(invitation)}>
+                                <button
+                                    className="btn btn-dark ms-3 mb-1 rounded-5 border-2 border-primary-subtle"
+                                    onClick={() => acceptInvite(invitation)}
+                                >
                                     <span>&#10003;</span>
                                 </button>
-                                <button className="btn btn-dark mb-1 ms-1 rounded-5 border-2 border-danger-subtle"
-                                        onClick={() => declineInvite(invitation.sender)}>
+                                <button
+                                    className="btn btn-dark mb-1 ms-1 rounded-5 border-2 border-danger-subtle"
+                                    onClick={() => declineInvite(invitation.sender)}
+                                >
                                     <span>&#10007;</span>
                                 </button>
                             </>
                         )}
                         {invitation.status === 'Accepted' && (
-                            <button className="btn btn-dark mb-1 rounded-5 border-2 border-primary-subtle ms-1"
-                                    onClick={() => navigate(`/game/${invitation.gameId}`)}>
+                            <button
+                                className="btn btn-dark mb-1 rounded-5 border-2 border-primary-subtle ms-1"
+                                onClick={() => navigate(`/game/${invitation.gameId}`)}
+                            >
                                 Join Lobby
                             </button>
                         )}
                         {invitation.status === 'Declined' && (
-                            <button className="btn btn-secondary mb-1 ms-1 rounded-5 "
-                                    onClick={() => deleteInvitation(invitation.sender)}>
+                            <button
+                                className="btn btn-secondary mb-1 ms-1 rounded-5"
+                                onClick={() => deleteInvitation(invitation.sender)}
+                            >
                                 <span>&#10007;</span>
                             </button>
                         )}
@@ -174,7 +182,9 @@ const Invite = () => {
                 <tbody>
                 {onlineUsers.map((user, index) => (
                     <tr key={index}>
-                        <td><span className="logged-in">●</span> {user} </td>
+                        <td>
+                            <span className="logged-in">●</span> {user}
+                        </td>
                         <td>
                             <button className="btn btn-outline-secondary btn-sm" onClick={() => sendInvitation(user)}>
                                 Send Invitation

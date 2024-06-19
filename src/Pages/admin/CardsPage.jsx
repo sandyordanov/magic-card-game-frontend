@@ -166,7 +166,7 @@ function CardsPage() {
                             <h2 className="mb-1 mt-2">All cards</h2>
                             <div className="cards-container container">
                                 {filteredCards.map((element, index) => (
-                                    <div key={index}  className="card-container">
+                                    <div key={index}  className="">
                                         <div data-cy="card-content">
                                             <Card {...element}></Card>
                                             <div className="button-container container">

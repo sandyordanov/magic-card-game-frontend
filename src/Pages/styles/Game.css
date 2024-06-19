@@ -1,0 +1,130 @@
+/* Responsive Design */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 10px;
+    background-image: url(/src/assets/gameBg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.player-data {
+    position: absolute;
+    padding: 10px;
+    color: white;
+    background-color: darkslategray;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.player-data.left {
+    top: 10px;
+    left: 10px;
+}
+
+.player-data.right {
+    top: 10px;
+    right: 10px;
+}
+
+.card {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
+.facedown-card, .opponent-played-card, .played-card {
+    position: absolute;
+    width: 20vw; /* Adjusting the width with viewport units */
+    height: auto;
+    max-width: 200px; /* Ensure it doesn't get too large */
+    max-height: 275px; /* Ensure it doesn't get too large */
+    transition: opacity 0.5s;
+}
+
+.facedown-card {
+    right: 20%;
+    top: 50%;
+    height: 40vw;
+    transform: translateY(-50%);
+    background-color: gray;
+    border: 2px solid black;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.opponent-played-card {
+    right: 20%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.played-card {
+    left: 20%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.player-hand {
+    padding: 20px;
+    position: relative;
+}
+
+.card-container {
+    margin: 10px;
+    transform: scale(1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding-right: 1.0pc;
+    cursor: pointer;
+}
+.card-container:hover {
+    transform: scale(1.05);
+}
+
+.selected-card {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .facedown-card, .opponent-played-card, .played-card {
+        width: 22vw; /* Increase width for smaller screens */
+        height: 30vw;
+    }
+
+    .card-container {
+        margin: 0;
+        width: 18vw; /* Decrease the width for smaller screens */
+
+    }
+
+    .play-button, .cancel-button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .facedown-card, .opponent-played-card, .played-card {
+        width: 40vw; /* Further increase width for even smaller screens */
+    }
+
+    .card-container {
+        width: 30vw; /* Further decrease the width for smaller screens */
+    }
+
+    .play-button, .cancel-button {
+        font-size: 12px;
+    }
+
+    .player-data {
+        font-size: 14px;
+        padding: 5px;
+    }
+}
