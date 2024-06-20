@@ -44,8 +44,8 @@ function Nav() {
         <nav className="navbar navbar-expand-lg bg-dark rounded-3 text-decoration-none mt-3 p-3 ms-2 me-2 bg-opacity-75">
             <div className="container-fluid">
                 <a className="navbar-brand text-white" href="/">MCG</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

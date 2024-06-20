@@ -18,6 +18,31 @@
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+.health-bar {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 20px; /* Adjust the height as needed */
+    position: relative; /* Add this */
+    margin-bottom: 10px;
+}
+
+.health-bar-inner {
+    height: 100%;
+    background-color: #4caf50; /* Green color for the health */
+    transition: width 0.3s ease-in-out;
+}
+
+.health-bar-text {
+    color: black;
+    position: absolute; /* Add this */
+    top: 50%; /* Add this */
+    left: 50%; /* Add this */
+    transform: translate(-50%, -50%); /* Add this */
+    width: 100%; /* Add this to ensure text is centered properly */
+    pointer-events: none; /* Optional: allows clicks to pass through text */
+}
 
 .player-data.left {
     top: 10px;
@@ -128,3 +153,82 @@
         padding: 5px;
     }
 }
+.attack-animation,.reverse-attack-animation{
+    background: darkorange;
+}
+.health-animation,.reverse-health-animation {
+    background: royalblue;
+}
+/* Initial setup for animation elements */
+.attack-animation,
+.health-animation,
+.reverse-attack-animation,
+.reverse-health-animation {
+    border-radius: 5px;
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Animation for attack and health points moving downwards */
+@keyframes moveDown {
+    0% {
+        opacity: 0;
+        transform: translateY(0) ;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(50px); /* Adjust this value as needed */
+    }
+}
+
+/* Animation for attack and health points moving horizontally towards each other */
+@keyframes moveHorizontally {
+    0% {
+        transform: translateX(0) translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(33vw) translateY(50px); /* Move towards the center */
+        opacity: 1;
+    }
+}
+@keyframes moveHorizontallyReverse {
+    0% {
+        transform: translateX(0) translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-33vw) translateY(50px); /* Move towards the center */
+        opacity: 1;
+    }
+}
+/* Animation for elements hitting each other and returning */
+@keyframes moveBack {
+    0% {
+        transform: translateX(30vw);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Applying the animations */
+.animate-move-down {
+    animation: moveDown 2s forwards;
+}
+
+.animate-move-horizontally {
+    animation: moveHorizontally 1s forwards;
+
+}
+.animate-move-horizontally-reverse {
+    animation: moveHorizontallyReverse 1s forwards;
+}
+.animate-move-back {
+    animation: moveBack 1s forwards;
+}
+

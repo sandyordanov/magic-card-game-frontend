@@ -130,7 +130,7 @@ const Invite = () => {
 
     return (
         <div className="bg-dark">
-            <h3 className="text-white text-center">Invite to play</h3>
+            <h3 className="text-white text-center">Game invitations</h3>
             <ul className="text-center text-white list-group">
                 {invitations.map((invitation, index) => (
                     <li className="mb-1 invite rounded-2" key={index}>
