@@ -1,0 +1,230 @@
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 10px;
+    background-image: url(/src/assets/gameBg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.player-data {
+    position: absolute;
+    padding: 10px;
+    color: white;
+    background-color: darkslategray;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.health-bar {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 20px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.health-bar-inner {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease-in-out;
+}
+
+.health-bar-text {
+    color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    pointer-events: none;
+}
+
+.player-data.left {
+    top: 10px;
+    left: 10px;
+}
+
+.player-data.right {
+    top: 10px;
+    right: 10px;
+}
+
+.card {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
+.facedown-card, .opponent-played-card, .played-card {
+    position: absolute;
+    width: 20vw;
+    height: auto;
+    max-width: 200px;
+    max-height: 275px;
+    transition: opacity 0.5s;
+}
+
+.facedown-card {
+    right: 20%;
+    top: 50%;
+    height: 40vw;
+    transform: translateY(-50%);
+    background-color: gray;
+    border: 2px solid black;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.opponent-played-card {
+    right: 20%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.played-card {
+    left: 20%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.player-hand {
+    padding: 20px;
+    position: relative;
+}
+
+.card-container {
+    margin: 10px;
+    transform: scale(1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding-right: 1.0pc;
+    cursor: pointer;
+}
+.card-container:hover {
+    transform: scale(1.05);
+}
+
+.selected-card {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .facedown-card, .opponent-played-card, .played-card {
+        width: 22vw;
+        height: 30vw;
+    }
+
+    .card-container {
+        margin: 0;
+        width: 18vw;
+
+    }
+
+    .play-button, .cancel-button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .facedown-card, .opponent-played-card, .played-card {
+        width: 40vw;
+    }
+
+    .card-container {
+        width: 30vw;
+    }
+
+    .play-button, .cancel-button {
+        font-size: 12px;
+    }
+
+    .player-data {
+        font-size: 14px;
+        padding: 5px;
+    }
+}
+.attack-animation,.reverse-attack-animation{
+    background: darkorange;
+}
+.health-animation,.reverse-health-animation {
+    background: royalblue;
+}
+
+.attack-animation,
+.health-animation,
+.reverse-attack-animation,
+.reverse-health-animation {
+    border-radius: 5px;
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes moveDown {
+    0% {
+        opacity: 0;
+        transform: translateY(0) ;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(50px);
+    }
+}
+
+@keyframes moveHorizontally {
+    0% {
+        transform: translateX(0) translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(33vw) translateY(50px);
+        opacity: 1;
+    }
+}
+@keyframes moveHorizontallyReverse {
+    0% {
+        transform: translateX(0) translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-33vw) translateY(50px);
+        opacity: 1;
+    }
+}
+@keyframes moveBack {
+    0% {
+        transform: translateX(30vw);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-move-down {
+    animation: moveDown 2s forwards;
+}
+
+.animate-move-horizontally {
+    animation: moveHorizontally 1s forwards;
+
+}
+.animate-move-horizontally-reverse {
+    animation: moveHorizontallyReverse 1s forwards;
+}
+.animate-move-back {
+    animation: moveBack 1s forwards;
+}
+

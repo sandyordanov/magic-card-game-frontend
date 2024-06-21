@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 import UserService from '../../Services/UserService';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function RegisterForm() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState("");
 
   const onSubmit = (data) => {
     UserService.createUser(data)
@@ -15,9 +16,7 @@ function RegisterForm() {
         })
         .catch(error => {
           if (error.response && error.response.data) {
-            alert(`Error: ${JSON.stringify(error.response.data)}`);
-          } else {
-            alert('Register failed!');
+            setServerError(error.response.data.error);
           }
         });
   };
@@ -32,6 +31,7 @@ function RegisterForm() {
                 <label className="me-2 form-label">Username:</label>
                 <input
                     className="form-control"
+                    data-cy="username-input"
                     type="text"
                     {...register('username', {
                       required: 'Username is required',
@@ -45,6 +45,7 @@ function RegisterForm() {
                 <label className="me-2 form-label">Password:</label>
                 <input
                     className="form-control"
+                    data-cy="password-input"
                     type="password"
                     {...register('password', {
                       required: 'Password is required',
@@ -53,8 +54,9 @@ function RegisterForm() {
                 />
                 {errors.password && <div className="text-danger">{errors.password.message}</div>}
               </div>
+              {serverError && <div className="text-danger">{serverError}</div>}
               <div className="mb-3">
-                <button type="submit" className="btn btn-primary">Register</button>
+                <button type="submit" data-cy="register-button" className="btn btn-primary">Register</button>
               </div>
             </form>
           </div>

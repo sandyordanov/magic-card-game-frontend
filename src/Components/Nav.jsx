@@ -12,10 +12,12 @@ function Nav() {
     const [player ,setPlayer] = useState({})
 
     useEffect(() => {
-        PlayerService.getPlayer(userId).then((response) =>{
-            setPlayer(response.data)
-        });
-    }, [userId]);
+        if (token != undefined){
+            PlayerService.getPlayer(userId).then((response) =>{
+                setPlayer(response.data)
+            });
+        }
+    }, [token, userId]);
     const handleLogout = () => {
         const client = new Client({
             brokerURL: 'ws://localhost:8080/ws',
@@ -42,21 +44,21 @@ function Nav() {
         <nav className="navbar navbar-expand-lg bg-dark rounded-3 text-decoration-none mt-3 p-3 ms-2 me-2 bg-opacity-75">
             <div className="container-fluid">
                 <a className="navbar-brand text-white" href="/">MCG</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link text-light" href="/shop">Shop</a>
+                            <a className="nav-link text-light" href="/">Shop</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link text-light" href="/deck">Decks</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link text-light" href="/account">Account</a>
+                            <a className="nav-link text-light" href="/">Account</a>
                         </li>
                     </ul>
 

@@ -18,6 +18,7 @@ function LoginForm({ onLogin, serverError }) {
                             <label className="me-2 form-label">Username:</label>
                             <input
                                 className="form-control"
+                                data-cy="username-input"
                                 type="text"
                                 {...register('username', {
                                     required: 'Username is required'
@@ -29,6 +30,7 @@ function LoginForm({ onLogin, serverError }) {
                             <label className="me-2 form-label">Password:</label>
                             <input
                                 className="form-control"
+                                data-cy="password-input"
                                 type="password"
                                 {...register('password', {
                                     required: 'Password is required'
@@ -38,7 +40,7 @@ function LoginForm({ onLogin, serverError }) {
                         </div>
                         {serverError && <div className="text-danger">{serverError}</div>}
                         <div className="mb-3">
-                            <button type="submit" className="btn btn-primary">Login</button>
+                            <button type="submit" data-cy="login-button" className="btn btn-primary">Login</button>
                         </div>
                     </form>
                 </div>

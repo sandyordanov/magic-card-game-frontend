@@ -93,23 +93,23 @@ const Decks = () => {
                 {(cards) => (
                     <div>
                         <h4 className="text-white text-center">Deck</h4>
-                        <div className="droppable-container">
+                        <div className="droppable-container" data-cy="deck-container">
                             {cards.map((element, index) => (
-                                <div key={index} className="">
-                                    <DraggableCard card={element} type="DECK_CARD"/>
+                                <div key={index} data-cy="deck-card"  className="">
+                                    <DraggableCard card={element}  type="DECK_CARD"/>
                                 </div>
                             ))}
                         </div>
                     </div>
                 )}
             </DroppableDeck>
-            <DroppableOwnedCards cards={ownedCards} onDrop={moveCardToOwned}>
+            <DroppableOwnedCards  cards={ownedCards} onDrop={moveCardToOwned}>
                 {(cards) => (
                     <div>
                         <h4 className="text-white text-center">Owned cards</h4>
-                        <div className="droppable-container">
+                        <div className="droppable-container" data-cy="owned-container">
                             {cards.map((element, index) => (
-                                <div key={index} className="">
+                                <div key={index}  data-cy="owned-card" className="">
                                     <DraggableCard card={element} type="OWNED_CARD"/>
                                 </div>
                             ))}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import TokenManager from "./TokenManager.js";
 
 const API_URL = "http://localhost:8080"; 
 const afterSlash = "users";
@@ -16,10 +17,11 @@ const UserService = {
     ),
 
     createAdmin: (props) => axios.post(`${API_URL}/${afterSlash}/admin`,
+
     {
         "username": props.username,
         "password": props.password
-    }
+    },{headers: {Authorization: `Bearer ${TokenManager.getAccessToken()}`}}
     ),
     updateUser: (props) => axios.put(`${API_URL}/${afterSlash}/${props.id}`,
     {

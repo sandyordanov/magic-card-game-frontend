@@ -23,6 +23,7 @@ function CardForm({ onSubmit }) {
                     })}
                     className="form-control"
                     id="name"
+                    data-cy="input-name"
                 />
                 {errors.name && <p className="error-message">{errors.name.message}</p>}
             </div>
@@ -37,6 +38,7 @@ function CardForm({ onSubmit }) {
                     })}
                     className="form-control"
                     id="attackPoints"
+                    data-cy="input-ap"
                 />
                 {errors.attackPoints && <p className="error-message">{errors.attackPoints.message}</p>}
             </div>
@@ -51,11 +53,12 @@ function CardForm({ onSubmit }) {
                     })}
                     className="form-control"
                     id="healthPoints"
+                    data-cy="input-hp"
                 />
                 {errors.healthPoints && <p className="error-message">{errors.healthPoints.message}</p>}
             </div>
             <div className="text-center">
-                <button className="btn btn-primary" type="submit">Create Card</button>
+                <button className="btn btn-primary" data-cy="btn-create" type="submit">Create Card</button>
             </div>
         </form>
     );

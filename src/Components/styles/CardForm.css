@@ -4,15 +4,14 @@
   }
   
   .card-form div {
-    margin-bottom: 10px; /* Adjust spacing between each input field */
+    margin-bottom: 10px;
   }
   
   .card-form label {
-    margin-bottom: 5px; /* Adjust spacing between label and input */
+    margin-bottom: 5px;
   }
   
 .card-form input {
-    /* Add any additional styling for input fields */
     padding: 5px;
     border: 1px solid #ccc;
 }

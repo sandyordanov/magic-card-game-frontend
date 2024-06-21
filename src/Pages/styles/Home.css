@@ -17,7 +17,7 @@
     font-size: 2rem;
     color: #333;
     margin-bottom: 1rem;
-    border:#333 solid; 
+    border:#333 solid;
     border-radius: 25px;
   }
 
@@ -35,6 +35,30 @@
     background-image: url(/src/assets/decksBg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+}
+.logged-in {
+    color: green;
+}
+/* Container for invites with vertical scrolling */
+.invites-container {
+    height: 85vh;
+    overflow-y: auto;
+    position: fixed;
+    top: 14%;
+    right: 0;
+    width: 20%;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+/* Hide scrollbar for Chrome, Safari and newer versions of Edge */
+.invites-container::-webkit-scrollbar {
+    display: none;
+}
+
+.invite{
+    background: rgb(2,0,36);
+    background: linear-gradient(342deg, rgba(2,0,36,1) 0%, rgba(9,121,107,1) 98%);
 }
 .droppable-container {
     border: 2px dashed #aaa;
@@ -54,20 +78,18 @@
 .draggable-card {
     max-width: 18rem;
 }
+@media (max-width: 992px) {
 
-.card {
-    margin: 10px;
-}
 
-h2 {
-    color: white;
-}
-.invites-container {
-    height: 85vh;
-    overflow-y: auto;
-}
+    .home-container {
+        padding: 1rem;
+    }
 
-/* WebKit (Chrome, Safari, newer versions of Edge) */
-.invites-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome, Safari and newer versions of Edge */
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+    }
 }

@@ -27,16 +27,24 @@ function CardsPage() {
 
     useEffect(() => {
         const filterCards = () => {
-            const filtered = cards.filter((card) => {
-                return (
-                    (name === '' || card.name.toLowerCase().includes(name.toLowerCase())) &&
-                    card.healthPoints >= minHealthPoints &&
-                    card.healthPoints <= maxHealthPoints &&
-                    card.attackPoints >= minAttackPoints &&
-                    card.attackPoints <= maxAttackPoints
-                );
-            });
-            setFilteredCards(filtered);
+           const queryParams = {
+               name:name,
+               minHealthPoints:minHealthPoints,
+               maxHealthPoints:maxHealthPoints,
+               minAttackPoints:minAttackPoints,
+               maxAttackPoints:maxAttackPoints
+           }
+            CardService.searchCards(queryParams).then((result)=>{setFilteredCards(result.data.cards)})
+            // const filtered = cards.filter((card) => {
+            //     return (
+            //         (name === '' || card.name.toLowerCase().includes(name.toLowerCase())) &&
+            //         card.healthPoints >= minHealthPoints &&
+            //         card.healthPoints <= maxHealthPoints &&
+            //         card.attackPoints >= minAttackPoints &&
+            //         card.attackPoints <= maxAttackPoints
+            //     );
+            // });
+            // setFilteredCards(filtered);
         };
 
         filterCards();
@@ -166,21 +174,24 @@ function CardsPage() {
                             <h2 className="mb-1 mt-2">All cards</h2>
                             <div className="cards-container container">
                                 {filteredCards.map((element, index) => (
-                                    <div key={index} className="card-container">
-                                        <Card {...element}></Card>
-                                        <div className="button-container container">
-                                            <div className="row justify-content-center">
-                                                <div className="col">
-                                                    <button className="btn btn-outline-primary" onClick={() => {
-                                                        navigate('/updateCard', {state: element})
-                                                    }}>Update
-                                                    </button>
-                                                    <button className="btn btn-danger"
-                                                            onClick={() => handleDelete(element.id)}>Delete
-                                                    </button>
+                                    <div key={index}  className="">
+                                        <div data-cy="card-content">
+                                            <Card {...element}></Card>
+                                            <div className="button-container container">
+                                                <div className="row justify-content-center">
+                                                    <div className="col">
+                                                        <button className="btn btn-outline-primary" data-cy="btn-update" onClick={() => {
+                                                            navigate('/updateCard', {state: element})
+                                                        }}>Update
+                                                        </button>
+                                                        <button className="btn btn-danger" data-cy="btn-delete"
+                                                                onClick={() => handleDelete(element.id)}>Delete
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 ))}
                             </div>

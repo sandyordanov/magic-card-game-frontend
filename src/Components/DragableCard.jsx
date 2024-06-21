@@ -53,6 +53,7 @@ const DraggableCard = ({ card, type }) => {
             }}
         >
             <div ref={cardRef}>
+
                 <Card {...card} />
             </div>
         </div>
