@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     {path: '/updateCard', element: <ProtectedRoute roles={['ADMIN']}><UpdatePage/></ProtectedRoute>},
     {path: '/login', element: <Login/>},
     {path: '/lobby', element: <Lobby/>},
-    {path: "/game/:gameId", element :<Game/>}
+    {path: "/game/:gameId", element :<ProtectedRoute roles={['PLAYER']}><Game/></ProtectedRoute>}
 
 ])
 ;

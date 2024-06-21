@@ -19,7 +19,7 @@
 .nav-admin-container {
     position: sticky;
     top: 0;
-    z-index: 1000; /* Adjust z-index to ensure it stays on top */
-    height: 100vh; /* Full height to fit the screen */
-    overflow-y: auto; /* To allow scrolling within the nav if content overflows */
+    z-index: 1000;
+    height: 100vh;
+    overflow-y: auto;
 }

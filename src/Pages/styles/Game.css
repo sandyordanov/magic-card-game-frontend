@@ -1,4 +1,4 @@
-/* Responsive Design */
+
 .game-container {
     display: flex;
     flex-direction: column;
@@ -23,25 +23,25 @@
     background-color: #ddd;
     border-radius: 4px;
     overflow: hidden;
-    height: 20px; /* Adjust the height as needed */
-    position: relative; /* Add this */
+    height: 20px;
+    position: relative;
     margin-bottom: 10px;
 }
 
 .health-bar-inner {
     height: 100%;
-    background-color: #4caf50; /* Green color for the health */
+    background-color: #4caf50;
     transition: width 0.3s ease-in-out;
 }
 
 .health-bar-text {
     color: black;
-    position: absolute; /* Add this */
-    top: 50%; /* Add this */
-    left: 50%; /* Add this */
-    transform: translate(-50%, -50%); /* Add this */
-    width: 100%; /* Add this to ensure text is centered properly */
-    pointer-events: none; /* Optional: allows clicks to pass through text */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    pointer-events: none;
 }
 
 .player-data.left {
@@ -62,10 +62,10 @@
 
 .facedown-card, .opponent-played-card, .played-card {
     position: absolute;
-    width: 20vw; /* Adjusting the width with viewport units */
+    width: 20vw;
     height: auto;
-    max-width: 200px; /* Ensure it doesn't get too large */
-    max-height: 275px; /* Ensure it doesn't get too large */
+    max-width: 200px;
+    max-height: 275px;
     transition: opacity 0.5s;
 }
 
@@ -120,13 +120,13 @@
 
 @media (max-width: 768px) {
     .facedown-card, .opponent-played-card, .played-card {
-        width: 22vw; /* Increase width for smaller screens */
+        width: 22vw;
         height: 30vw;
     }
 
     .card-container {
         margin: 0;
-        width: 18vw; /* Decrease the width for smaller screens */
+        width: 18vw;
 
     }
 
@@ -137,11 +137,11 @@
 
 @media (max-width: 480px) {
     .facedown-card, .opponent-played-card, .played-card {
-        width: 40vw; /* Further increase width for even smaller screens */
+        width: 40vw;
     }
 
     .card-container {
-        width: 30vw; /* Further decrease the width for smaller screens */
+        width: 30vw;
     }
 
     .play-button, .cancel-button {
@@ -159,7 +159,7 @@
 .health-animation,.reverse-health-animation {
     background: royalblue;
 }
-/* Initial setup for animation elements */
+
 .attack-animation,
 .health-animation,
 .reverse-attack-animation,
@@ -173,7 +173,6 @@
     transition: opacity 0.5s ease-in-out;
 }
 
-/* Animation for attack and health points moving downwards */
 @keyframes moveDown {
     0% {
         opacity: 0;
@@ -181,18 +180,17 @@
     }
     100% {
         opacity: 1;
-        transform: translateY(50px); /* Adjust this value as needed */
+        transform: translateY(50px);
     }
 }
 
-/* Animation for attack and health points moving horizontally towards each other */
 @keyframes moveHorizontally {
     0% {
         transform: translateX(0) translateY(50px);
         opacity: 0;
     }
     100% {
-        transform: translateX(33vw) translateY(50px); /* Move towards the center */
+        transform: translateX(33vw) translateY(50px);
         opacity: 1;
     }
 }
@@ -202,11 +200,10 @@
         opacity: 0;
     }
     100% {
-        transform: translateX(-33vw) translateY(50px); /* Move towards the center */
+        transform: translateX(-33vw) translateY(50px);
         opacity: 1;
     }
 }
-/* Animation for elements hitting each other and returning */
 @keyframes moveBack {
     0% {
         transform: translateX(30vw);
@@ -216,7 +213,6 @@
     }
 }
 
-/* Applying the animations */
 .animate-move-down {
     animation: moveDown 2s forwards;
 }

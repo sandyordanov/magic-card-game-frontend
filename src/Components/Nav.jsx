@@ -52,13 +52,13 @@ function Nav() {
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link text-light" href="/shop">Shop</a>
+                            <a className="nav-link text-light" href="/">Shop</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link text-light" href="/deck">Decks</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link text-light" href="/account">Account</a>
+                            <a className="nav-link text-light" href="/">Account</a>
                         </li>
                     </ul>
 

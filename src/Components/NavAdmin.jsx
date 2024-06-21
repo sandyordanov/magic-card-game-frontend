@@ -14,9 +14,6 @@ function NavAdmin() {
 
     return (
         <div>
-            <button className="nav-toggle-button btn btn-dark" >
-                ☰
-            </button>
             <div className={`nav-admin-container`}>
                 <div className="container-fluid">
                     <div className="row">

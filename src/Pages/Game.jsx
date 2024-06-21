@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import useWebSocket from '../Services/useWebSocket';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import TokenManager from '../Services/TokenManager.js';
 import Card from '../Components/Card.jsx';
 import './styles/Game.css';
 
 const Game = () => {
-    const { gameId } = useParams();
+    const {gameId} = useParams();
     const navigate = useNavigate();
-    const { client, isConnected } = useWebSocket('ws://localhost:8080/ws');
+    const {client, isConnected} = useWebSocket('ws://localhost:8080/ws');
     const [gameState, setGameState] = useState(null);
     const [player, setPlayer] = useState(null);
     const [opponent, setOpponent] = useState(null);
@@ -46,7 +46,7 @@ const Game = () => {
 
             client.publish({
                 destination: `/app/game/${gameId}`,
-                body: JSON.stringify({ gameId: Number(gameId) }),
+                body: JSON.stringify({gameId: Number(gameId), userId: Number(TokenManager.getUserId())}),
             });
 
             return () => {
@@ -71,12 +71,11 @@ const Game = () => {
     }, [gameState]);
 
     useEffect(() => {
-        if (gameState && gameState.turnFinished) {
+        if (gameState && gameState.turnFinished && player && opponent) {
             setIsPlayerTurn(false);
             const opponentPlayed = gameState.player1.userId === player.userId ? gameState.pendingRequests[gameState.player2.userId] : gameState.pendingRequests[gameState.player1.userId];
             setOpponentPlayedCard(opponentPlayed.card);
 
-            // Start the animation
             const attackAnimation = document.getElementById('attack-animation');
             const healthAnimation = document.getElementById('health-animation');
             const reverseAttackAnimation = document.getElementById('reverse-attack-animation');
@@ -228,10 +227,10 @@ const Game = () => {
                 {opponentPlayedCard && (
                     <div className="opponent-played-card">
                         <Card {...opponentPlayedCard} />
-                        <div id="health-animation" className="health-animation"><img
+                        <div id="health-animation" className="health-animation text-white ms-1 me-1"><img
                             src="/shield.png"/>{opponentPlayedCard?.healthPoints}</div>
                         <div id="reverse-attack-animation"
-                             className="reverse-attack-animation"><img
+                             className="reverse-attack-animation text-white ms-1 me-1"><img
                             src="/sword32.png"/>{opponentPlayedCard?.attackPoints}
                         </div>
                     </div>
@@ -239,11 +238,12 @@ const Game = () => {
                 {playedCard && (
                     <div className="played-card">
                         <Card {...playedCard} />
-                        <div id="attack-animation" className="attack-animation"><img
+                        <div id="attack-animation" className="attack-animation text-white ms-1 me-1"><img
                             src="/sword32.png"/>{playedCard?.attackPoints}
                         </div>
                         <div id="reverse-health-animation"
-                             className="reverse-health-animation">{playedCard?.healthPoints}<img src="/shield.png"/>
+                             className="reverse-health-animation text-white ms-1 me-1">{playedCard?.healthPoints}<img
+                            src="/shield.png"/>
                         </div>
                     </div>
                 )}

@@ -27,16 +27,24 @@ function CardsPage() {
 
     useEffect(() => {
         const filterCards = () => {
-            const filtered = cards.filter((card) => {
-                return (
-                    (name === '' || card.name.toLowerCase().includes(name.toLowerCase())) &&
-                    card.healthPoints >= minHealthPoints &&
-                    card.healthPoints <= maxHealthPoints &&
-                    card.attackPoints >= minAttackPoints &&
-                    card.attackPoints <= maxAttackPoints
-                );
-            });
-            setFilteredCards(filtered);
+           const queryParams = {
+               name:name,
+               minHealthPoints:minHealthPoints,
+               maxHealthPoints:maxHealthPoints,
+               minAttackPoints:minAttackPoints,
+               maxAttackPoints:maxAttackPoints
+           }
+            CardService.searchCards(queryParams).then((result)=>{setFilteredCards(result.data.cards)})
+            // const filtered = cards.filter((card) => {
+            //     return (
+            //         (name === '' || card.name.toLowerCase().includes(name.toLowerCase())) &&
+            //         card.healthPoints >= minHealthPoints &&
+            //         card.healthPoints <= maxHealthPoints &&
+            //         card.attackPoints >= minAttackPoints &&
+            //         card.attackPoints <= maxAttackPoints
+            //     );
+            // });
+            // setFilteredCards(filtered);
         };
 
         filterCards();
